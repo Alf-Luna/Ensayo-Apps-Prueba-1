@@ -1,5 +1,8 @@
 package org.example
 
+import java.lang.NumberFormatException
+import kotlin.math.round
+
 class GestorPedidos () {
 
     val pedido: MutableList<Producto>
@@ -10,7 +13,7 @@ class GestorPedidos () {
         menu = iniciarMenu()
     }
 
-    fun iniciarMenu(): Map<Int, Producto>{
+    fun iniciarMenu(): Map<Int, Producto> {
         val pizza = Comida(
             nombre = "Pizza Pepperoni",
             precio = 12000.0,
@@ -47,13 +50,73 @@ class GestorPedidos () {
         return inventario
     }
 
-    fun mostrarMenu(){
-        for (item in menu){
+    fun mostrarMenu() {
+        for (item in menu) {
             println("" + item.key + ". " + item.value.getNombre())
         }
     }
 
-    fun agregarItem(nuevoItem: Producto){
-        pedido.add(nuevoItem)
+    fun tomarPedido() {
+
+        mostrarMenu()
+        var itemDeseado = readln()
+        val inputsAdmitidas: String = "123456789"
+
+        try {
+            itemDeseado = itemDeseado.filter { it in inputsAdmitidas }
+            for (num in itemDeseado){
+                val itemNum = num.toString().toInt() //char.toInt() esta depreciada. Por ende char.toString().toInt()
+                val nuevoItem = menu.get(itemNum)!!
+                pedido.add(nuevoItem)
+            }
+
+        } catch (e: NumberFormatException) {
+            println("Error. Debe ingresar solo un numero, sin letras ni otros caracteres.")
+
+        } catch (e: NullPointerException) {
+            println("Error. El numero ingresado no corresponde a un item del menu.")
+        }
+    }
+
+    fun calculoPrecioFinal(){
+
+        val iva = 0.19
+        var descuento: Double = 0.05
+        var subtotal: Double = 0.0
+        var totalConDescuento: Double
+        var totalFinal: Double
+
+        for (item in pedido){
+            subtotal += item.getPrecio()
+        }
+
+        print("Ingrese el tipo de cliente que usted es (VIP / Premium / normal): ")
+        var tipoCliente: String? = readln()
+        val caracteresNoDeseados = "`~!@#$%^&*()_={}[]<>|?,./*-+1234567890"
+        tipoCliente = tipoCliente?.uppercase()
+        tipoCliente = tipoCliente?.filterNot { it in caracteresNoDeseados }
+
+        when (tipoCliente){
+            "VIP" -> descuento = 0.1
+
+            "PREMIUM" -> {
+                descuento = 0.15
+                tipoCliente = "Premium"
+            }
+
+            else ->  tipoCliente = "Regular"
+        }
+
+        totalConDescuento = subtotal - subtotal * descuento
+        totalFinal = totalConDescuento + totalConDescuento * iva
+
+        println("------------RESUMEN PEDIDO------------")
+        for (item in pedido){
+            println("-" + item.getNombre() + " $" + item.getPrecio())
+        }
+        println("Subtotal: $" + subtotal)
+        println("Descuento " + tipoCliente + ": -$" + (subtotal * descuento))
+        println("IVA (" + (iva * 100) + "%): $" + (subtotal * iva))
+        println("Total: $" + totalFinal)
     }
 }

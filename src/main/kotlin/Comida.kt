@@ -6,4 +6,6 @@ class Comida(nombre: String, precio: Double, categoria: String, tiempoPreparacio
     fun getCalidad(): String{
         return calidad;
     }
+
+
 }
