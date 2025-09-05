@@ -7,5 +7,6 @@ fun main() {
     val operador: GestorPedidos = GestorPedidos()
 
     println("Bienvenido al sistema de compras FoodExpress")
-    operador.mostrarMenu()
+    operador.tomarPedido()
+    operador.calculoPrecioFinal()
 }
