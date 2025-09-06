@@ -1,12 +1,15 @@
-package org.example
+import org.example.GestorPedidos
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 fun main() {
 
+    var pedidoExitoso: Boolean = false
     val operador: GestorPedidos = GestorPedidos()
 
     println("Bienvenido al sistema de compras FoodExpress")
-    operador.tomarPedido()
+    while (pedidoExitoso == false){
+        pedidoExitoso = operador.tomarPedido()
+    }
+
     operador.calculoPrecioFinal()
 }

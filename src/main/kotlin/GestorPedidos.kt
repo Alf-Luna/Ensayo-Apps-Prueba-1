@@ -43,7 +43,7 @@ class GestorPedidos () {
             precio = 3500.0,
             categoria = "Bebida Caliente",
             tiempoPreparacionSegundos = 1.0,
-            volumen = "chico"
+            volumen = "Chico"
         )
 
         val inventario = mapOf<Int, Producto>(1 to pizza, 2 to empanada, 3 to jugo, 4 to cafe)
@@ -56,26 +56,32 @@ class GestorPedidos () {
         }
     }
 
-    fun tomarPedido() {
+    fun tomarPedido(): Boolean{
 
+        pedido.clear()
         mostrarMenu()
+        print("Ingrese el numero de los productos que desea ordenar: ")
         var itemDeseado = readln()
-        val inputsAdmitidas: String = "123456789"
+        val inputsAdmitidas: String = "1234567890"
+        var itemNum: Int = 0
 
         try {
             itemDeseado = itemDeseado.filter { it in inputsAdmitidas }
             for (num in itemDeseado){
-                val itemNum = num.toString().toInt() //char.toInt() esta depreciada. Por ende char.toString().toInt()
+                itemNum = num.toString().toInt() //char.toInt() esta depreciada. Por ende char.toString().toInt()
                 val nuevoItem = menu.get(itemNum)!!
                 pedido.add(nuevoItem)
             }
 
         } catch (e: NumberFormatException) {
             println("Error. Debe ingresar solo un numero, sin letras ni otros caracteres.")
+            return false
 
         } catch (e: NullPointerException) {
-            println("Error. El numero ingresado no corresponde a un item del menu.")
+            println("Error. El numero '" + itemNum +"' no corresponde a un item del menu. Ingrese su pedido nuevamente")
+            return false
         }
+        return true
     }
 
     fun calculoPrecioFinal(){
@@ -92,7 +98,7 @@ class GestorPedidos () {
 
         print("Ingrese el tipo de cliente que usted es (VIP / Premium / normal): ")
         var tipoCliente: String? = readln()
-        val caracteresNoDeseados = "`~!@#$%^&*()_={}[]<>|?,./*-+1234567890"
+        val caracteresNoDeseados = "`~!@#$%^&*()_={}[]<>|?,./*-+1234567890 "
         tipoCliente = tipoCliente?.uppercase()
         tipoCliente = tipoCliente?.filterNot { it in caracteresNoDeseados }
 
