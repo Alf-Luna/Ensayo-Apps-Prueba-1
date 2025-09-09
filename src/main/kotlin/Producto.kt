@@ -7,7 +7,7 @@ open class Producto(private var nombre: String, private var precio: Double, priv
         return nombre
     }
 
-    fun getPrecio(): Double {
+    open fun getPrecio(): Double {
         return precio
     }
 
@@ -17,5 +17,9 @@ open class Producto(private var nombre: String, private var precio: Double, priv
 
     fun getTiempoPreparacionSegundos(): Double {
         return tiempoPreparacionSegundos
+    }
+
+    open fun mostrarInformacion(): String {
+        return ""
     }
 }

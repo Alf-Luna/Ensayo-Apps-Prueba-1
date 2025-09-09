@@ -1,7 +1,8 @@
 import org.example.GestorPedidos
+import kotlinx.coroutines.*
 
 
-fun main() {
+suspend fun main() {
 
     var pedidoExitoso: Boolean = false
     val operador: GestorPedidos = GestorPedidos()
@@ -10,6 +11,6 @@ fun main() {
     while (pedidoExitoso == false){
         pedidoExitoso = operador.tomarPedido()
     }
-
     operador.calculoPrecioFinal()
+    operador.prepararPedido()
 }
