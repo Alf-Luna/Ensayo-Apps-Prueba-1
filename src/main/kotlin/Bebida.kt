@@ -6,4 +6,8 @@ class Bebida(nombre: String, precio: Double, categoria: String, tiempoPreparacio
     fun getVolumen(): String{
         return volumen;
     }
+
+    override fun mostrarInformacion(): String{
+        return getNombre() + "(" + volumen + ") $" + getPrecio()
+    }
 }

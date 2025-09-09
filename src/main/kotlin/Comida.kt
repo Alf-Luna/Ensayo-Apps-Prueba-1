@@ -7,5 +7,8 @@ class Comida(nombre: String, precio: Double, categoria: String, tiempoPreparacio
         return calidad;
     }
 
+    override fun mostrarInformacion(): String{
+        return getNombre() + "(" + calidad + ") $" + getPrecio()
+    }
 
 }

@@ -52,13 +52,14 @@ class GestorPedidos () {
 
     fun mostrarMenu() {
         for (item in menu) {
-            println("" + item.key + ". " + item.value.getNombre())
+            println("" + item.key + ". " + item.value.mostrarInformacion())
         }
     }
 
     fun tomarPedido() {
 
         mostrarMenu()
+        print("Ingrese el o los numeros que corresponden a los productos que usted desea comprar: ")
         var itemDeseado = readln()
         val inputsAdmitidas: String = "123456789"
 
@@ -104,7 +105,7 @@ class GestorPedidos () {
                 tipoCliente = "Premium"
             }
 
-            else ->  tipoCliente = "Regular"
+            else -> tipoCliente = "Regular"
         }
 
         totalConDescuento = subtotal - subtotal * descuento
@@ -112,7 +113,7 @@ class GestorPedidos () {
 
         println("------------RESUMEN PEDIDO------------")
         for (item in pedido){
-            println("-" + item.getNombre() + " $" + item.getPrecio())
+            println("-" + item.mostrarInformacion())
         }
         println("Subtotal: $" + subtotal)
         println("Descuento " + tipoCliente + ": -$" + (subtotal * descuento))
